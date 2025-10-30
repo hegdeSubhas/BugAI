@@ -1,0 +1,219 @@
+/* 💎 Fully Dynamic Live Background (Enhanced + Balanced Glow & Spread Dots) */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+:root {
+  --color1: #a855f7; /* Purple */
+  --color2: #6366f1; /* Indigo */
+  --color3: #22d3ee; /* Cyan */
+  --color4: #50fa7b; /* Neon Green */
+  --color-dark: #0f172a; /* Deep background */
+  --color-particle-base: rgba(240, 240, 255, 0.2);
+  --color-particle-bright: rgba(240, 240, 255, 0.8);
+}
+
+/* === Global Reset & Base === */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: var(--color1);
+  color: var(--color3);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-dark);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color2);
+  border-radius: 10px;
+  border: 2px solid var(--color-dark);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color3);
+}
+
+/* === Dynamic Gradient Background === */
+body {
+  font-family: 'Inter', sans-serif;
+  color: #f8fafc;
+  margin: 0;
+  min-height: 100vh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  position: relative;
+  scroll-behavior: smooth;
+
+  background: 
+    radial-gradient(circle at 20% 30%, var(--color1), transparent 60%),
+    radial-gradient(circle at 80% 70%, var(--color2), transparent 60%),
+    radial-gradient(circle at 50% 50%, var(--color3), transparent 70%),
+    linear-gradient(135deg, #0f172a, #1e1f29, #0f172a);
+  background-blend-mode: screen;
+  background-size: 400% 400%;
+  animation: moveBackground 25s ease-in-out infinite;
+}
+
+/* === Soft Light Layers === */
+body::before,
+body::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(circle at center,
+    hsla(from var(--color1) h s l / 0.1),
+    rgba(15, 23, 42, 0.15));
+  mix-blend-mode: screen;
+  animation: floatLights 12s ease-in-out infinite alternate;
+}
+body::after {
+  background: radial-gradient(circle at center,
+    hsla(from var(--color2) h s l / 0.12),
+    rgba(15, 23, 42, 0.15));
+  animation-delay: -6s;
+  filter: blur(60px);
+}
+
+/* === Background Animations === */
+@keyframes moveBackground {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes floatLights {
+  0% { transform: translateY(0px) scale(1); opacity: 0.5; }
+  50% { transform: translateY(-40px) scale(1.2); opacity: 0.8; }
+  100% { transform: translateY(0px) scale(1); opacity: 0.5; }
+}
+
+/* === Floating Dots (Cinematic, Wide Spread, Subtle Glow) === */
+.dot {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(56,189,248,0.3) 0%, rgba(59,130,246,0.05) 80%);
+  box-shadow: 0 0 12px rgba(56,189,248,0.25), 0 0 25px rgba(59,130,246,0.1);
+  opacity: 0.45;
+  filter: blur(4px);
+  animation: floatDot 25s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Spread dots across screen */
+.dot:nth-child(1) { left: 5%;  top: 10%;  animation-delay: 0s; }
+.dot:nth-child(2) { left: 20%; top: 65%;  animation-delay: 3s; }
+.dot:nth-child(3) { left: 35%; top: 25%;  animation-delay: 6s; }
+.dot:nth-child(4) { left: 50%; top: 80%;  animation-delay: 9s; }
+.dot:nth-child(5) { left: 65%; top: 15%;  animation-delay: 12s; }
+.dot:nth-child(6) { left: 80%; top: 75%;  animation-delay: 15s; }
+.dot:nth-child(7) { left: 90%; top: 40%;  animation-delay: 18s; }
+.dot:nth-child(8) { left: 45%; top: 10%;  animation-delay: 21s; }
+.dot:nth-child(9) { left: 60%; top: 50%;  animation-delay: 24s; }
+
+@keyframes floatDot {
+  0%   { transform: translateY(0px) translateX(0px) scale(1); opacity: 0.4; }
+  25%  { transform: translateY(-30px) translateX(25px) scale(1.1); opacity: 0.6; }
+  50%  { transform: translateY(-60px) translateX(-20px) scale(1.15); opacity: 0.7; }
+  75%  { transform: translateY(-100px) translateX(10px) scale(1); opacity: 0.5; }
+  100% { transform: translateY(0px) translateX(0px) scale(1); opacity: 0.4; }
+}
+
+/* === Content === */
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 2rem;
+  width: 100%;
+  height: 100vh;
+}
+
+/* === Title with Clear Readable Glow === */
+h1 {
+  position: relative;
+  text-align: center;
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin: 0;
+  color: #f9fafc;
+  background: linear-gradient(90deg, var(--color2), var(--color3));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 1px rgba(255,255,255,0.2);
+  animation: softGlow 6s ease-in-out infinite alternate, floatText 6s ease-in-out infinite alternate;
+}
+
+/* 💡 Gentle, readable glow */
+@keyframes softGlow {
+  0% {
+    filter: drop-shadow(0 0 0.5px var(--color2))
+            drop-shadow(0 0 1px var(--color3));
+  }
+  50% {
+    filter: drop-shadow(0 0 1px var(--color1))
+            drop-shadow(0 0 1px var(--color3));
+  }
+  100% {
+    filter: drop-shadow(0 0 0.5px var(--color2))
+            drop-shadow(0 0 1px var(--color3));
+  }
+}
+
+/* Floating motion for subtle life */
+@keyframes floatText {
+  0% { transform: translateY(0px); }
+  100% { transform: translateY(-10px); }
+}
+
+/* === Slider === */
+.styled-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  max-width: 300px;
+  height: 10px;
+  background: rgba(15, 23, 42, 0.5);
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  transition: background 0.3s ease;
+}
+.styled-slider:hover {
+  background: rgba(15, 23, 42, 0.7);
+}
+
+.styled-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--color3);
+  cursor: pointer;
+  box-shadow: 0 0 10px var(--color3), 0 0 20px var(--color3);
+  transition: all 0.2s ease;
+}
+.styled-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.1);
+  background: var(--color4);
+}
+.styled-slider::-webkit-slider-thumb:active {
+  transform: scale(1.2);
+  background: var(--color4);
+  box-shadow: 0 0 20px var(--color4), 0 0 40px var(--color1);
+}
